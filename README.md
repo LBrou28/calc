@@ -26,7 +26,8 @@ flutter test
 
 The first widget test starts the app, checks the initial display, taps **2 → + →
 2 → =**, and asserts that the result display contains **4**. Other tests cover
-arithmetic, clear, decimal input, backspace, and recovery from division by zero.
+subtraction, multiplication, division, clear, duplicate decimal prevention,
+backspace, recovery from division by zero, and sign changes.
 
 To try it manually, start the app and tap the same four buttons.
 
@@ -34,7 +35,9 @@ To try it manually, start the app and tap the same four buttons.
 
 Every push and pull request runs `.github/workflows/flutter.yml` on GitHub
 Actions. It installs Flutter and dependencies, checks formatting, analyzes the
-code, runs the tests, builds the release web app, and uploads a `calc-web`
+code, runs nine widget tests across six named check steps (addition, subtraction,
+multiplication, division, clear, and input/error handling), builds the release
+web app, and uploads a `calc-web`
 artifact. It can also be run from the Actions tab using **Run workflow**.
 
 To build locally:
