@@ -1,0 +1,37 @@
+name: Flutter build and test
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.1'
+          channel: stable
+          cache: true
+      - name: Install dependencies
+        run: flutter pub get
+      - name: Check formatting
+        run: dart format --output=none --set-exit-if-changed lib test
+      - name: Analyze
+        run: flutter analyze
+      - name: Run calculator tests (including 2 + 2 = 4)
+        run: flutter test --coverage
+      - name: Build release web app
+        run: flutter build web --release
+      - name: Save web build
+        uses: actions/upload-artifact@v4
+        with:
+          name: calc-web
+          path: build/web
+          if-no-files-found: error
